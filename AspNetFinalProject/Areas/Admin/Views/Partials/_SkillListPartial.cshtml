@@ -1,0 +1,25 @@
+﻿@model IEnumerable<AspNetFinalProject.Models.Entity.Skills>
+
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Percent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SkillType)
+        </td>
+        <td>
+            <a href="javascript:OnEditAB(@item.Id)" onclick="OnEditAB(@item.Id)">Edit</a>
+        </td>
+    </tr>
+}
+
+

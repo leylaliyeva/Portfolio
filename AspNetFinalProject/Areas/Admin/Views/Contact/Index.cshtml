@@ -1,0 +1,92 @@
+﻿@model IEnumerable<AspNetFinalProject.Models.Entity.Contact>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section script{
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+        function Read(id) {
+            $.ajax({
+                url: '@Url.Action("Read","Contact")/' + id,
+                type: 'GET',
+                success: function (response) {
+                    $("#AboutModalBody").html(response);
+                    $("#exampleModalCenter").modal('show');
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+    }
+    </script>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Message)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="@(item.IsRead==true ? "font-weight: normal" : "font-weight: bold")">
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td style="@(item.IsRead==true ? "font-weight: normal" : "font-weight: bold")">
+                @Html.DisplayFor(modelItem => item.Subject)
+            </td>
+            <td style="@(item.IsRead==true ? "font-weight: normal" : "font-weight: bold")">
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                <a href="javascript:Read(@item.Id)" onclick="Read(@item.Id)">Read</a>
+                @Html.ActionLink("Answer", "AnswerTo")
+            </td>
+        </tr>
+    }
+</table>
+@using (Html.BeginForm("Read", "Contact", method: FormMethod.Post,
+    htmlAttributes: new
+    {
+        @class = "modal fade",
+        id = "exampleModalCenter",
+        tabindex = "-1",
+        role = "dialog",
+        aria_labelledby = "exampleModalCenterTitle",
+        aria_hidden = "true",
+        enctype = "multipart/form-data"
+
+    }))
+{
+    <div>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="AboutModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

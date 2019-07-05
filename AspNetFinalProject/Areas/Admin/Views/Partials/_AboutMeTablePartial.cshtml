@@ -1,0 +1,46 @@
+﻿@model IEnumerable<AspNetFinalProject.Models.Entity.AboutMe>
+
+
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td><img width="100" src="@(string.IsNullOrWhiteSpace(item.PhotoPath)?"":Href("~/Template/media/"+item.PhotoPath))" /></td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Experience)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Degree)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CareerLevel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Website)
+        </td>
+
+        <td>
+            <a href="javascript:OnEdit(@item.Id)" class="edit" onclick="OnEdit(@item.Id)">Edit</a>
+        </td>
+    </tr>
+}
+

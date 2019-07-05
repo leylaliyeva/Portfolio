@@ -1,0 +1,16 @@
+﻿@model IEnumerable<AspNetFinalProject.Models.Entity.Bio>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content)
+        </td>
+        <td>
+            <a href="javascript:EditBio(@item.Id)" onclick="EditBio(@item.Id)">Edit</a>
+        </td>
+    </tr>
+}

@@ -1,0 +1,170 @@
+﻿@model IEnumerable<AspNetFinalProject.Models.Entity.Services>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section script{
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Create -->
+    <script>
+        function CreateNew() {
+            var _data = $("#createInfo").serialize();
+            console.log(_data);
+            $.ajax({
+                url: '@Url.Action("Create", "Service", new { area = "Admin" })',
+                type: 'POST',
+                data: _data,
+                success: function (response) {
+                    $("#TableBodyAB").html(response);
+                    $("#exampleModalCenter").find("input").val("");
+                    $("#exampleModalCenter").modal('hide')
+                } ,
+                error: function (response) {
+                    console.log(response);
+                }
+            })
+
+
+        }
+    </script>
+    <!-- Edit -->
+    <script>
+        function OnEditAB(id) {
+            $.ajax({
+                url: '@Url.Action("Edit", "Service")/' + id,
+                type: 'GET',
+                success: function (response) {
+                    $("#AboutModalBody").html(response);
+                    $("#exampleModalCenterCreate").modal('show');
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        }
+        $("#exampleModalCenter").submit(function (e) {
+            e.preventDefault();
+            debugger;
+            console.log("tgrts");
+            var _data = $("#exampleModalCenterCreate").serialize();
+              $.ajax({
+                url: '@Url.Action("Edit", "Service")',
+                  type: 'POST',
+                  data: _data,
+                success: function (response) {
+                    $("#TableBodyAB").html(response);
+                    $("#exampleModalCenterCreate").modal('hide');
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+        })
+
+    </script>
+}
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Create New Service
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "Service", FormMethod.Post, htmlAttributes: new { id = "createInfo" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <h4>Services</h4>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Title", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.Editor("Title", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessage("Title", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Content", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextArea("Content", new { style = "width: 430px; height: 200px;",htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+            
+                    </div>
+                }
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" onclick="CreateNew()" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="TableBodyAB">
+        @Html.Partial("~/Areas/Admin/Views/Partials/_ServiceListPartial.cshtml", Model)
+    </tbody>
+
+
+</table>
+@using (Html.BeginForm("Edit", "Service", method: FormMethod.Post,
+    htmlAttributes: new
+    {
+        @class = "modal fade",
+        id = "exampleModalCenterCreate",
+        tabindex = "-1",
+        role = "dialog",
+        aria_labelledby = "exampleModalCenterTitle",
+        aria_hidden = "true",
+        enctype = "multipart/form-data"
+
+    }))
+{
+    <div>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="AboutModalBody">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

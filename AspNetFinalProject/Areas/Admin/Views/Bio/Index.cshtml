@@ -1,0 +1,99 @@
+﻿@model IEnumerable<AspNetFinalProject.Models.Entity.Bio>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section script{
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+        function EditBio(id) {
+            $.ajax({
+                url: '@Url.Action("Edit","Bio")/' + id,
+                type: 'GET',
+                success: function (response) {
+                    $("#modalBody").html(response);
+                    $("#exampleModalCenterCreate").modal('show');
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            })
+        }
+
+        $("#exampleModalCenterCreate").submit(function (e){
+            e.preventDefault();
+            _data = $(this).serialize();
+            console.log(_data);
+            $.ajax({
+                    url: '@Url.Action("Edit","Bio")',
+                    type: 'POST',
+                data: _data ,
+                success: function (response) {
+                    $("#tableBody").html(response);
+                    $("#exampleModalCenterCreate").modal('hide');
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            })
+        })
+    </script>
+}
+
+
+
+@using (Html.BeginForm("Edit", "Bio", method: FormMethod.Post,
+    htmlAttributes: new
+    {
+        @class = "modal fade",
+        id = "exampleModalCenterCreate",
+        name = "exampleModalCenterCreate",
+        tabindex = "-1",
+        role = "dialog",
+        aria_labelledby = "exampleModalCenterTitle",
+        aria_hidden = "true",
+
+    }))
+{
+    <div>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tableBody" class="mytable" name="tableBody">
+        @Html.Partial("~/Areas/Admin/Views/Partials/_BioTableBodyPartial.cshtml", Model)
+    </tbody>
+
+
+</table>

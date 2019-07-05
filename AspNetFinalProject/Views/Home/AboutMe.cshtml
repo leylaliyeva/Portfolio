@@ -1,0 +1,118 @@
+﻿@model AspNetFinalProject.ViewModel.AboutMeViewModel
+@{
+    ViewBag.Title = "AboutMe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div role="tabpanel" class="tab-pane fade in active" id="about-me">
+    <div class="inside-sec">
+        <!-- BIO AND SKILLS -->
+        <h5 class="tittle">About Me</h5>
+
+        <!-- Blog -->
+        <section class="about-me padding-top-10">
+
+            <!-- Personal Info -->
+            <ul class="personal-info">
+                <li>
+                    <p> <span> Name</span>@Model.About.Name</p>
+                </li>
+                <li>
+                    <p> <span> Age</span> @Model.About.Age.ToString()Years </p>
+                </li>
+                <li>
+                    <p> <span> Location</span> @Model.About.Location
+                <li>
+                    <p> <span> Experience</span> @Model.About.Experience.ToString() Years </p>
+                </li>
+                <li>
+                    <p> <span> Degree</span> @Model.About.Degree </p>
+                </li>
+                <li>
+                    <p> <span> Career Level</span> @Model.About.CareerLevel </p>
+                </li>
+                <li>
+                    <p> <span> Phone</span> @Model.About.Phone </p>
+                </li>
+                <li>
+                    <p> <span> FAX</span> @Model.About.Fax</p>
+                </li>
+                <li>
+                    <p> <span> E-mail</span> <a href="#."> @Model.About.Email</a> </p>
+                </li>
+                <li>
+                    <p> <span> Website</span><a href="#."> @Model.About.Website </a></p>
+                </li>
+            </ul>
+
+            <!-- I’m Web Designer -->
+            <h5 class="tittle">@Model.Bio.Title</h5>
+            <div class="padding-20">
+                <p>
+                    @Model.Bio.Content
+                </p>
+            </div>
+
+            <!-- Services -->
+            <h5 class="tittle">Services</h5>
+            <div class="row padding-20 margin-top-50">
+
+                <!-- Icon -->
+                @foreach (var item in Model.Services)
+                {
+                    <div class="col-md-4 text-center">
+                        <div class="icon-box i-large ib-black">
+                            <div class="ib-icon"> <i class="fas fa-briefcase"></i></div>
+                            <div class="ib-info">
+                                <h4 class="h6">@item.Title</h4>
+                                <p>@item.Content</p>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+
+            </div>
+
+           
+
+            <!-- Skills -->
+            <h5 class="tittle">Skills</h5>
+
+            <div class="panel-group accordion padding-20" id="accordion">
+
+                @for (int i = 0; i < Model.Skills.Count(); i++)
+                {
+                    <div class="panel panel-default">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <!-- PANEL HEADING -->
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#@Model.Skills[i].Id" class=""> @Model.Skills[i].Name</a> </h4>
+                                </div>
+                            </div>
+
+                            <!-- Skillls Bars -->
+                            <div class="col-sm-8">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="@Model.Skills[i].Percent" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"> <span class="sr-only">60% Complete</span> </div>
+                                </div>
+
+                                <!-- Skillls Text -->
+                                <div id="@Model.Skills[i].Id" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <p>@Model.Skills[i].Description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+
+            
+        </section>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<AspNetFinalProject.Models.Entity.ProffesionalExperience>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeginDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GraduateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Job)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content)
+        </td>
+        <td>
+            <a href="javascritp:OnEditAB(@item.Id)" onclick="OnEditAB(@item.Id)">Edit</a>
+        </td>
+    </tr>
+}
+

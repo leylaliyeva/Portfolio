@@ -1,0 +1,107 @@
+﻿@model AspNetFinalProject.ViewModel.ResumeViewModel
+@{
+    ViewBag.Title = "Resume";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div  class="tab-pane " id="resume">
+    <div class="inside-sec">
+        <!-- BIO AND SKILLS -->
+        <h5 class="tittle">Bio & Skills</h5>
+        <div class="bio-info padding-30">
+            <p>
+                @Model.Bio.Content
+            </p>
+            <div class="skills">
+
+                <!--  SKILLS -->
+                <h5 class="margin-top-30">Hard Skills</h5>
+
+                <div class="panel-group accordion padding-20" id="accordion">
+
+                    @for (int i = 0; i < Model.Skills.Count(); i++)
+                    {
+                        <div class="panel panel-default">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <!-- PANEL HEADING -->
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#@Model.Skills[i].Id" class=""> @Model.Skills[i].Name</a> </h4>
+                                    </div>
+                                </div>
+
+                                <!-- Skillls Bars -->
+                                <div class="col-sm-8">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="@Model.Skills[i].Percent" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"> <span class="sr-only">60% Complete</span> </div>
+                                    </div>
+
+                                    <!-- Skillls Text -->
+                                    <div id="@Model.Skills[i].Id" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <p>@Model.Skills[i].Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Experience -->
+    <div class="inside-sec margin-top-30">
+        <!-- Professional Experience -->
+        <h5 class="tittle">Professional Experience</h5>
+        <div class="padding-30 exp-history">
+
+
+            <!-- html5 and css3 Developer -->
+            @foreach (var item in Model.ProffesionalExperiences)
+            {
+                <div class="exp">
+                    <div class="media-left"> <span class="sun">@item.BeginDate - @item.GraduateDate</span> </div>
+                    <div class="media-body">
+
+                        <!-- COmpany Logo -->
+                        <h6>@item.Title</h6>
+                        <p>@item.Job</p>
+                        <p>@item.Location</p>
+                        <p class="margin-top-10"> @item.Content </p>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+
+    <!-- Academic Background -->
+    <div class="inside-sec margin-top-30">
+        <!-- Academic Background -->
+        <h5 class="tittle">Academic Background</h5>
+        <div class="padding-30 exp-history">
+
+            @foreach (var item in Model.AcademicBackgrounds)
+            {
+                <!-- html5 and css3 Developer -->
+                <div class="exp">
+                    <div class="media-left"> <span class="sun">@item.BeginDate  @item.GraduateDate</span> </div>
+                    <div class="media-body">
+                        <!-- COmpany Logo -->
+                        <div class="company-logo"> <span class="diploma"><i class="fa fa-graduation-cap"></i> Download Diploma</span> </div>
+                        <h6>@item.Title</h6>
+                        <p>@item.Faculty</p>
+                        <p>@item.Location</p>
+                        <p class="margin-top-10"> @item.Content </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

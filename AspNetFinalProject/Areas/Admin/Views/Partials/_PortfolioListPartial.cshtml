@@ -1,0 +1,24 @@
+﻿@model IEnumerable<AspNetFinalProject.Models.Entity.Portfolio>
+
+@foreach (var item in Model)
+{
+    <tr>
+
+        <td>
+            <img width="100" src="@(string.IsNullOrWhiteSpace(item.MediaUrl)?"":Href("~/Uploads/"+item.MediaUrl))"/>
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Link)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+        </td>
+    </tr>
+}

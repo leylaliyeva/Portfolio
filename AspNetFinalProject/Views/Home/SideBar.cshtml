@@ -1,0 +1,77 @@
+﻿@model AspNetFinalProject.Models.Entity.AboutMe
+@{
+    ViewBag.Title = "SideBar";
+    Layout = null;
+}
+
+<div class="col-md-4">
+    <div class="side-bar">
+
+        <!-- Professional Details -->
+        <h5 class="tittle">Professional Details</h5>
+        <img src="~/Uploads/@Model.MediaUrl" class="img-responsive" alt="">
+        <ul class="personal-info">
+            <li>
+                <p> <span> Name</span> @Model.Name </p>
+            </li>
+            <li>
+                <p> <span> Age</span> @Model.Age Years </p>
+            </li>
+            <li>
+                <p> <span> Location</span> @Model.Location </p>
+            </li>
+            <li>
+                <p> <span> Experience</span> @Model.Experience Years </p>
+            </li>
+            <li>
+                <p> <span> Degree</span>@Model.Degree </p>
+            </li>
+            <li>
+                <p> <span> Career Level</span> @Model.CareerLevel </p>
+            </li>
+            <li>
+                <p> <span> Phone</span> @Model.Phone </p>
+            </li>
+            <li>
+                <p> <span> FAX</span> @Model.Fax </p>
+            </li>
+            <li>
+                <p> <span> E-mail</span> <a href="#."> @Model.Email</a> </p>
+            </li>
+            <li>
+                <p> <span> Website</span><a href="#."> @Model.Website </a></p>
+            </li>
+        </ul>
+
+        <!-- Contact Me -->
+        <h5 class="tittle">Contact Me</h5>
+        <div class="contact padding-25">
+            <!-- Success Msg -->
+            <div id="contact_message" class="success-msg"> <i class="fa fa-paper-plane-o"></i>Thank You. Your Message has been Submitted</div>
+
+            <!-- FORM -->
+            <form role="form" id="contact_form" action="@Url.Action("ContactMe","Home")" class="contact-form" method="post">
+                <ul class="row">
+                    <li class="col-sm-12">
+                        <label>
+                            <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                        </label>
+                    </li>
+                    <li class="col-sm-12">
+                        <label>
+                            <input type="text" class="form-control" name="company" id="company" placeholder="Subject">
+                        </label>
+                    </li>
+                    <li class="col-sm-12">
+                        <label>
+                            <textarea class="form-control" name="message" id="message" rows="5" placeholder="Message"></textarea>
+                        </label>
+                    </li>
+                    <li class="col-sm-12">
+                        <button type="submit" value="submit" id="btn_submit" onClick="proceed();">Send Message</button>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
